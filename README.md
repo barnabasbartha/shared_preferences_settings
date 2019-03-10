@@ -6,6 +6,18 @@ A library that provides an easy solution to create setting screens with simple a
   - Key-value pairs saved via Shared Preferences
   - React style data retrieval
   - Disable or hide widgets according to others' value
+  
+  
+## Examples
+![](https://public.barthaweb.com/flutter_shared_preferences_settings/1.gif "")
+![](https://public.barthaweb.com/flutter_shared_preferences_settings/2.gif "")
+![](https://public.barthaweb.com/flutter_shared_preferences_settings/3.gif "")
+![](https://public.barthaweb.com/flutter_shared_preferences_settings/4.gif "")
+![](https://public.barthaweb.com/flutter_shared_preferences_settings/5.gif "")
+![](https://public.barthaweb.com/flutter_shared_preferences_settings/6.gif "")
+![](https://public.barthaweb.com/flutter_shared_preferences_settings/7.gif "")
+![](https://public.barthaweb.com/flutter_shared_preferences_settings/8.gif "")
+![](https://public.barthaweb.com/flutter_shared_preferences_settings/9.gif "")
 
 ## Screen widgets
 
@@ -103,7 +115,7 @@ SettingsTileGroup(
 #### ExpansionSettingsTile
 A widget that groups settings tiles and other widgets together with a group title and can be expanded or closed.
 The following example shows how you can create a simple ExpansionSettingsTile with a CheckboxSettingsTile: 
-```
+```dart
 ExpansionSettingsTile(
     title: 'You can expand & close',
     children: 
