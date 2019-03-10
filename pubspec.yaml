@@ -1,0 +1,22 @@
+name: shared_preferences_settings
+description: Settings Screen with Shared Preferences
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  shared_preferences: ^0.4.3
+  rxdart: ^0.20.0
+  flutter_colorpicker: ^0.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
