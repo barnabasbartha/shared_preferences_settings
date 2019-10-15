@@ -282,6 +282,14 @@ TextFieldModalSettingsTile(
     keyboardType: TextInputType.emailAddress,
 );
 ```
+In this example, we replace the text with a series of bullets to obfuscate sensitive information such as user passwords.
+```dart
+TextFieldModalSettingsTile(
+    settingsKey: 'key-of-your-setting',
+    title: 'Set User Password',
+    obfuscateText: true,
+);
+```
 
 #### SimpleColorPickerSettingsTile
 A tile that launches a modal dialog where the user can pick any color.
