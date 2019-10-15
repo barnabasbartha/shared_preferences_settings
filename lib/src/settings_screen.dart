@@ -1453,6 +1453,7 @@ class _ModalSettingsTile extends StatefulWidget {
   final String confirmModalCancelCaption;
   final String confirmModalConfirmCaption;
   final Function valueMap;
+  final obfuscateSubtitle;
 
   _ModalSettingsTile({
     @required this.settingKey,
@@ -1477,6 +1478,7 @@ class _ModalSettingsTile extends StatefulWidget {
     this.confirmModalCancelCaption,
     this.confirmModalConfirmCaption,
     this.valueMap,
+    this.obfuscateSubtitle = false,
   });
 
   @override
@@ -1528,8 +1530,12 @@ class __ModalSettingsTileState extends State<_ModalSettingsTile>
   }
 
   String _getSubtitle(String value) {
-    return widget.valueToTitle(value) != null
-        ? widget.subtitle ?? widget.valueToTitle(value)
+    return widget.valueToTitle(value) != null ?
+        widget.subtitle ??
+        (!widget.obfuscateSubtitle ?
+          widget.valueToTitle(value)
+          : value.length > 0? widget.valueToTitle('●' * value.length)
+          : "Not Set")
         : null;
   }
 
@@ -1781,6 +1787,7 @@ class RadioPickerSettingsTile extends StatelessWidget {
 /// visibleByDefault - If visibleIfKey is not null and the value of the given
 ///   key is not saved yet then this value will be the default value.
 ///   Default: true.
+/// obscureText - If true, susbtitle and textinputfield will be black dots.
 ///
 ///
 /// * Examples:
@@ -1816,6 +1823,7 @@ class TextFieldModalSettingsTile extends StatelessWidget {
   final String visibleIfKey;
   final String enabledIfKey;
   final bool visibleByDefault;
+  final bool obscureText;
 
   TextFieldModalSettingsTile({
     @required this.settingKey,
@@ -1829,6 +1837,7 @@ class TextFieldModalSettingsTile extends StatelessWidget {
     this.visibleIfKey,
     this.enabledIfKey,
     this.visibleByDefault = true,
+    this.obscureText = false,
   });
 
   @override
@@ -1837,6 +1846,7 @@ class TextFieldModalSettingsTile extends StatelessWidget {
       settingKey: settingKey,
       title: title,
       subtitle: subtitle,
+      obfuscateSubtitle: obscureText,
       icon: icon,
       defaultValue: defaultValue,
       valueToTitle: (String key) => key,
@@ -1854,6 +1864,7 @@ class TextFieldModalSettingsTile extends StatelessWidget {
           autofocus: true,
           controller: _controller,
           keyboardType: keyboardType,
+          obscureText: obscureText,
         );
       },
       cancelCaption: cancelCaption,
