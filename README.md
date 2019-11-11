@@ -37,7 +37,7 @@ SettingsScreen(
     title: "Application Settings",
     children: 
         CheckboxSettingsTile(
-            settingsKey: 'key-of-your-setting',
+            settingKey: 'key-of-your-setting',
             title: 'This is a simple Checkbox',
         ),
     ,
@@ -89,7 +89,7 @@ SimpleSettingsTile(
         title: 'Sub menu',
         children: 
             CheckboxSettingsTile(
-                settingsKey: 'key-of-your-setting',
+                settingKey: 'key-of-your-setting',
                 title: 'This is a simple Checkbox',
             ),
         ],
@@ -132,7 +132,7 @@ A settings tile with a Checkbox that can be true or false.
 The following example shows how you can create a tile with checkbox:
 ```dart
 CheckboxSettingsTile(
-    settingsKey: 'key-of-your-setting',
+    settingKey: 'key-of-your-setting',
     title: 'This is a Checkbox',
 );
 ```
@@ -140,12 +140,12 @@ CheckboxSettingsTile(
 In this example, we create a tile using more parameters:
 ```dart
 CheckboxSettingsTile(
-    settingsKey: 'wifi_status',
+    settingKey: 'wifi_status',
     title: 'Wi-Fi',
     subtitle: 'Connected.',
     subtitleIfOff: 'To see available networks, turn on Wi-Fi.',
     screen: SettingsToggleScreen(
-        settingsKey: 'wifi_status',
+        settingKey: 'wifi_status',
         subtitle: 'Connected',
         subtitleIfOff: 'To see available networks, turn on Wi-Fi.',
         children: 
@@ -172,19 +172,19 @@ A settings tile with a Switch that can be true or false.
 The following example shows how you can create a tile with switch:
 ```dart
 SwitchSettingsTile(
-    settingsKey: 'key-of-your-setting',
+    settingKey: 'key-of-your-setting',
     title: 'This is a Switch',
 );
 ```
 In this example, we create a tile using more parameters:
 ```dart
 SwitchSettingsTile(
-    settingsKey: 'wifi_status',
+    settingKey: 'wifi_status',
     title: 'Wi-Fi',
     subtitle: 'Connected.',
     subtitleIfOff: 'To see available networks, turn on Wi-Fi.',
     screen: SettingsToggleScreen(
-        settingsKey: 'wifi_status',
+        settingKey: 'wifi_status',
         subtitle: 'Connected',
         subtitleIfOff: 'To see available networks, turn on Wi-Fi.',
         children: 
@@ -250,7 +250,7 @@ A simple tile that launches a modal dialog with radio buttons.
 The following example shows how you can create a tile that launches radio buttons:
 ```dart
 RadioPickerSettingsTile(
-    settingsKey: 'key-of-your-setting',
+    settingKey: 'key-of-your-setting',
     title: 'Choose one in the modal dialog',
     values: {
         'a': 'Option A',
@@ -267,14 +267,14 @@ A simple tile that launches a modal dialog with a text input.
 The following example shows how you can create a tile that launches a modal dialog with a text input:
 ```dart
 TextFieldModalSettingsTile(
-    settingsKey: 'key-of-your-setting',
+    settingKey: 'key-of-your-setting',
     title: 'Type something',
 );
 ```
 In this example, we create a text field modal tile using more parameters. By giving an emailAddress keyboardType, the phone's keyboard will be optimized to type email addresses easily:
 ```dart
 TextFieldModalSettingsTile(
-    settingsKey: 'key-of-your-setting',
+    settingKey: 'key-of-your-setting',
     title: 'Type your email',
     defaultValue: 'This is by default.',
     cancelCaption: 'Cancel',
@@ -285,7 +285,7 @@ TextFieldModalSettingsTile(
 In this example, we replace the text with a series of bullets to obfuscate sensitive information such as user passwords.
 ```dart
 TextFieldModalSettingsTile(
-    settingsKey: 'key-of-your-setting',
+    settingKey: 'key-of-your-setting',
     title: 'Set User Password',
     obfuscateText: true,
 );
@@ -296,14 +296,14 @@ A tile that launches a modal dialog where the user can pick any color.
 The following example shows how you can create a tile that launches a modal dialog with a color picker:
 ```dart
 SimpleColorPickerSettingsTile(
-    settingsKey: 'key-of-your-setting',
+    settingKey: 'key-of-your-setting',
     title: 'Color Picker',
 );
 ```
 In this example, we create the same tile but using more of its parameter:
 ```dart
 SimpleColorPickerSettingsTile(
-    settingsKey: 'key-of-your-setting',
+    settingKey: 'key-of-your-setting',
     title: 'Color Picker',
     cancelCaption: 'Keep the old value',
     okCaption: 'Select new',
@@ -319,14 +319,14 @@ A tile that launches a modal dialog where the user can pick any Material color.
 The following example shows how you can create a tile that launches a modal dialog with a Material color picker:
 ```dart
 MaterialColorPickerSettingsTile(
-    settingsKey: 'key-of-your-setting',
+    settingKey: 'key-of-your-setting',
     title: 'Color Picker',
 );
 ```
 In this example, we create the same tile but using more of its parameter:
 ```dart
 MaterialColorPickerSettingsTile(
-    settingsKey: 'key-of-your-setting',
+    settingKey: 'key-of-your-setting',
     title: 'Color Picker',
     cancelCaption: 'Keep the old value',
     okCaption: 'Select new',
@@ -466,7 +466,7 @@ void someAsyncFunction() async {
 Some Settings Tiles have enabledIfKey and/or visibleIfKey, visibleByDefault parameters. 
 Using these parameters, some basic conditional logic can be achieved.
 
-In this example, the SimpleSettingsTile will be hidden by default and will appear as soon as the Checkbox or Switch that has key-of-parent settingsKey get turned on:
+In this example, the SimpleSettingsTile will be hidden by default and will appear as soon as the Checkbox or Switch that has key-of-parent settingKey get turned on:
 ```dart
 SimpleSettingsTile(
     title: 'Conditionally visible',
