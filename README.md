@@ -1,5 +1,5 @@
 # Settings Screen with Shared Preferences
-A library that provides an easy solution to create setting screens with simple and compound options.
+A library that provides an easy solution to create settings screens with simple and compound options.
 
 
 ## Features
