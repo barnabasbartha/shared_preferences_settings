@@ -492,3 +492,6 @@ MIT License
 ## Donation
 If you would like to contribute to my work, you can [donate via PayPal](https://www.paypal.me/barthabrw).
 
+
+## Customization
+Need customization for this library or a developer? Please contact me via email you can find on my profile.
