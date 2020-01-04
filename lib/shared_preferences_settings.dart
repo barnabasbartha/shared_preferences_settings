@@ -1,15 +1,10 @@
 /*
  * Settings Screen with Shared Preferences
  *
- * Version: 1.0.0
- * Updated on: 2019-02-05
- * Author: BarthaWEB
- * Website: https://barthaweb.com
- *
- * All rights reserved.
- * See LICENSE for distribution and usage details.
+ * Author: Barnabás BARTHA (BarthaBRW)
+ * Website: https://barthaweb.com/2019/12/flutter-settings-screen-with-shared-preferences/
  */
- 
+
 library shared_preferences_settings;
 
 export 'src/settings.dart';
