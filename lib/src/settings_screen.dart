@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/block_picker.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'settings.dart';
@@ -1530,12 +1529,13 @@ class __ModalSettingsTileState extends State<_ModalSettingsTile>
   }
 
   String _getSubtitle(String value) {
-    return widget.valueToTitle(value) != null ?
-        widget.subtitle ??
-        (!widget.obfuscateSubtitle ?
-          widget.valueToTitle(value)
-          : value.length > 0? widget.valueToTitle('●' * value.length)
-          : "Not Set")
+    return widget.valueToTitle(value) != null
+        ? widget.subtitle ??
+            (!widget.obfuscateSubtitle
+                ? widget.valueToTitle(value)
+                : value.length > 0
+                    ? widget.valueToTitle('●' * value.length)
+                    : "Not Set")
         : null;
   }
 
@@ -2077,7 +2077,6 @@ class SimpleColorPickerSettingsTile extends StatelessWidget with _ColorWidget {
             return ColorPicker(
               pickerColor: _getColorByString(value),
               onColorChanged: (Color color) => onChanged(color.toString()),
-              enableLabel: false,
               pickerAreaHeightPercent: 1.0,
               enableAlpha: true,
             );
