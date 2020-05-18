@@ -9,6 +9,9 @@ A library that provides an easy solution to create settings screens with simple 
   
   
 ## Examples
+
+View code example at: https://github.com/gurulnd-git/shared_preferences_settings_example
+
 ![](https://public.barthaweb.com/flutter_shared_preferences_settings/1.gif "")
 ![](https://public.barthaweb.com/flutter_shared_preferences_settings/2.gif "")
 ![](https://public.barthaweb.com/flutter_shared_preferences_settings/3.gif "")
@@ -35,12 +38,12 @@ Inside the children parameter you can define settings tiles and other widgets. I
 ```dart
 SettingsScreen(
     title: "Application Settings",
-    children: 
+    children: [
         CheckboxSettingsTile(
             settingKey: 'key-of-your-setting',
             title: 'This is a simple Checkbox',
         ),
-    ,
+    ],
 );
 ```
 
@@ -63,12 +66,12 @@ SettingsToggleScreen(
     defaultValue: true,
     subtitle: 'Enabled',
     subtitleIfOff: 'Disabled',
-    children: 
+    children: [
         SettingsContainer(
             child: Text('This is enabled! :)'),
         ),
     ],
-    childrenIfOff: 
+    childrenIfOff: [
         SettingsContainer(
             child: Text('Tap the checkbox to enable.'),
         ),
@@ -87,7 +90,7 @@ SimpleSettingsTile(
     subtitle: 'More, advanced settings.'
     screen: SomeSettingsScreen(
         title: 'Sub menu',
-        children: 
+        children: [
             CheckboxSettingsTile(
                 settingKey: 'key-of-your-setting',
                 title: 'This is a simple Checkbox',
@@ -103,7 +106,7 @@ The following example shows how you can create a group with a simple CheckboxSet
 ```dart
 SettingsTileGroup(
     title: 'Group title',
-    children: 
+    children: [
         CheckboxSettingsTile(
             settingKey: 'key-of-your-setting',
             title: 'This is a simple Checkbox',
@@ -118,7 +121,7 @@ The following example shows how you can create a simple ExpansionSettingsTile wi
 ```dart
 ExpansionSettingsTile(
     title: 'You can expand & close',
-    children: 
+    children: [
         CheckboxSettingsTile(
             settingKey: 'key-of-your-setting',
             title: 'This is a simple Checkbox',
@@ -148,16 +151,16 @@ CheckboxSettingsTile(
         settingKey: 'wifi_status',
         subtitle: 'Connected',
         subtitleIfOff: 'To see available networks, turn on Wi-Fi.',
-        children: 
+        children: [
             SettingsContainer(
-                children: 
+                children: [
                     Text('Put some widgets or tiles here.'),
                 ],
             ),
         ],
-        children: 
+        children: [
             SettingsContainer(
-                children: 
+                children: [
                     Text('You are offline.'),
                     Text('Put some widgets or tiles here.'),
                 ],
@@ -187,16 +190,16 @@ SwitchSettingsTile(
         settingKey: 'wifi_status',
         subtitle: 'Connected',
         subtitleIfOff: 'To see available networks, turn on Wi-Fi.',
-        children: 
+        children: [
             SettingsContainer(
-                children: 
+                children: [
                     Text('Put some widgets or tiles here.'),
                 ],
             ),
         ],
-        children: 
+        children: [
             SettingsContainer(
-                children: 
+                children: [
                     Text('You are offline.'),
                     Text('Put some widgets or tiles here.'),
                 ],
@@ -348,7 +351,7 @@ SettingsContainer(
 In this example, we create a container with multiple Text widgets:
 ```dart
 SettingsContainer(
-    children: 
+    children: [
         Text('First line'),
         Text('Second line'),
     ],
