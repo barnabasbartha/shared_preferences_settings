@@ -2380,7 +2380,7 @@ class _SettingsSlider extends StatelessWidget {
             value: value,
             min: min,
             max: max,
-            divisions: (max - min) ~/ (step) + 1,
+            divisions: (max - min) ~/ (step),
             onChanged: enabled ? onChanged : null,
           ),
         ),
