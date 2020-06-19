@@ -52,6 +52,7 @@ class SettingsScreen extends StatelessWidget {
   final String confirmModalTitle;
   final String confirmModalCancelCaption;
   final String confirmModalConfirmCaption;
+  final Color appBarBackgroundColor;
 
   SettingsScreen({
     @required this.title,
@@ -60,6 +61,7 @@ class SettingsScreen extends StatelessWidget {
     this.confirmModalTitle,
     this.confirmModalCancelCaption,
     this.confirmModalConfirmCaption,
+    this.appBarBackgroundColor,
   });
 
   @override
@@ -67,6 +69,7 @@ class SettingsScreen extends StatelessWidget {
     return _ConfirmableScreen(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: appBarBackgroundColor,
           title: Text(title),
         ),
         body: ListView.builder(
