@@ -48,15 +48,15 @@ import 'settings.dart';
 class SettingsScreen extends StatelessWidget {
   final String title;
   final List<Widget> children;
-  final String confirmText;
-  final String confirmModalTitle;
-  final String confirmModalCancelCaption;
-  final String confirmModalConfirmCaption;
-  final Color appBarBackgroundColor;
+  final String? confirmText;
+  final String? confirmModalTitle;
+  final String? confirmModalCancelCaption;
+  final String? confirmModalConfirmCaption;
+  final Color? appBarBackgroundColor;
 
   SettingsScreen({
-    @required this.title,
-    @required this.children,
+    required this.title,
+    required this.children,
     this.confirmText,
     this.confirmModalTitle,
     this.confirmModalCancelCaption,
@@ -156,18 +156,18 @@ class SettingsToggleScreen extends StatelessWidget {
   final String subtitle;
   final String subtitleIfOff;
   final List<Widget> children;
-  final List<Widget> childrenIfOff;
-  final String confirmText;
-  final String confirmTextToEnable;
-  final String confirmTextToDisable;
-  final String confirmModalTitle;
-  final String confirmModalCancelCaption;
-  final String confirmModalConfirmCaption;
+  final List<Widget>? childrenIfOff;
+  final String? confirmText;
+  final String? confirmTextToEnable;
+  final String? confirmTextToDisable;
+  final String? confirmModalTitle;
+  final String? confirmModalCancelCaption;
+  final String? confirmModalConfirmCaption;
 
   SettingsToggleScreen({
-    @required this.title,
-    @required this.settingKey,
-    @required this.children,
+    required this.title,
+    required this.settingKey,
+    required this.children,
     this.childrenIfOff,
     this.defaultValue = false,
     this.subtitle = "On",
@@ -192,7 +192,7 @@ class SettingsToggleScreen extends StatelessWidget {
             children: _buildChildren(
               value,
               value == false && childrenIfOff != null
-                  ? childrenIfOff
+                  ? childrenIfOff!
                   : children,
             ),
             confirmText: confirmText,
@@ -207,7 +207,7 @@ class SettingsToggleScreen extends StatelessWidget {
       SwitchSettingsTile(
         settingKey: settingKey,
         title:
-            value == false && subtitleIfOff != null ? subtitleIfOff : subtitle,
+            value == false ? subtitleIfOff : subtitle,
         defaultValue: defaultValue,
         confirmText: confirmText,
         confirmTextToEnable: confirmTextToEnable,
@@ -257,15 +257,15 @@ class SettingsToggleScreen extends StatelessWidget {
 ///
 class SettingsTileGroup extends StatelessWidget {
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final List<Widget> children;
-  final String visibleIfKey;
+  final String? visibleIfKey;
   final bool visibleByDefault;
 
   SettingsTileGroup({
-    @required this.title,
+    required this.title,
     this.subtitle,
-    @required this.children,
+    required this.children,
     this.visibleIfKey,
     this.visibleByDefault = true,
   });
@@ -279,7 +279,7 @@ class SettingsTileGroup extends StatelessWidget {
       settingKey: visibleIfKey,
       defaultValue: visibleByDefault,
       childBuilder: (BuildContext context, bool visible) {
-        return (visible ?? false) ? _buildChild(context) : Container();
+        return visible ? _buildChild(context) : Container();
       },
     );
   }
@@ -306,7 +306,7 @@ class SettingsTileGroup extends StatelessWidget {
       elements.addAll([
         Container(
           padding: const EdgeInsets.all(16.0),
-          child: Align(alignment: Alignment.centerLeft, child: Text(subtitle)),
+          child: Align(alignment: Alignment.centerLeft, child: Text(subtitle!)),
         ),
         _SettingsTileDivider(),
       ]);
@@ -319,20 +319,20 @@ class SettingsTileGroup extends StatelessWidget {
 }
 
 class _SettingsTile extends StatefulWidget {
-  final String title;
-  final String subtitle;
-  final Icon icon;
-  final Widget leading;
-  final Widget widget;
-  final Widget child;
-  final Widget screen;
-  final String visibleIfKey;
-  final String enabledIfKey;
+  final String? title;
+  final String? subtitle;
+  final Icon? icon;
+  final Widget? leading;
+  final Widget? widget;
+  final Widget? child;
+  final Widget? screen;
+  final String? visibleIfKey;
+  final String? enabledIfKey;
   final bool visibleByDefault;
-  final Function onTap;
+  final Function? onTap;
 
   _SettingsTile({
-    @required this.title,
+    required this.title,
     this.subtitle,
     this.icon,
     this.leading,
@@ -356,12 +356,12 @@ class __SettingsTileState extends State<_SettingsTile>
     super.initState();
     if (widget.visibleIfKey != null) {
       Future.delayed(Duration.zero, () {
-        Settings().pingBool(widget.visibleIfKey, widget.visibleByDefault);
+        Settings().pingBool(widget.visibleIfKey!, widget.visibleByDefault);
       });
     }
     if (widget.enabledIfKey != null) {
       Future.delayed(Duration.zero, () {
-        Settings().pingBool(widget.enabledIfKey, widget.visibleByDefault);
+        Settings().pingBool(widget.enabledIfKey!, widget.visibleByDefault);
       });
     }
   }
@@ -369,7 +369,7 @@ class __SettingsTileState extends State<_SettingsTile>
   @override
   Widget build(BuildContext context) {
     if (widget.visibleIfKey == null) {
-      return _wrapEnableable(context);
+      return _wrapEnableable(context)!;
     }
     return Settings().onBoolChanged(
       settingKey: widget.visibleIfKey,
@@ -380,7 +380,7 @@ class __SettingsTileState extends State<_SettingsTile>
     );
   }
 
-  Widget _wrapEnableable(BuildContext context) {
+  Widget? _wrapEnableable(BuildContext context) {
     return wrapEnableable(
       context: context,
       enabledIfKey: widget.enabledIfKey,
@@ -396,7 +396,7 @@ class __SettingsTileState extends State<_SettingsTile>
       children: <Widget>[
         ListTile(
           leading: widget.icon ?? widget.leading,
-          title: Text(widget.title),
+          title: Text(widget.title!),
           subtitle: _buildSubtitle(),
           onTap: _shouldDisableTap(enabled)
               ? null
@@ -417,9 +417,9 @@ class __SettingsTileState extends State<_SettingsTile>
           widget.onTap == null) ||
       enabled == false;
 
-  Widget _buildSubtitle() {
-    Widget subtitleWidget =
-        widget.subtitle != null ? Text(widget.subtitle) : null;
+  Widget? _buildSubtitle() {
+    Widget? subtitleWidget =
+        widget.subtitle != null ? Text(widget.subtitle!) : null;
     if (widget.child == null) {
       return subtitleWidget;
     }
@@ -430,7 +430,7 @@ class __SettingsTileState extends State<_SettingsTile>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         subtitleWidget,
-        widget.child,
+        widget.child!,
       ],
     );
   }
@@ -439,7 +439,7 @@ class __SettingsTileState extends State<_SettingsTile>
     if (widget.screen != null) {
       Navigator.push(
         context,
-        CupertinoPageRoute(builder: (context) => widget.screen),
+        CupertinoPageRoute(builder: (context) => widget.screen!),
       );
     } else {
       widget.onTap?.call();
@@ -481,16 +481,16 @@ class __SettingsTileState extends State<_SettingsTile>
 /// );
 class ExpansionSettingsTile extends StatelessWidget {
   final String title;
-  final Icon icon;
+  final Icon? icon;
   final List<Widget> children;
-  final String visibleIfKey;
+  final String? visibleIfKey;
   final bool visibleByDefault;
   final bool initiallyExpanded;
 
   ExpansionSettingsTile({
-    @required this.title,
+    required this.title,
     this.icon,
-    @required this.children,
+    required this.children,
     this.initiallyExpanded = false,
     this.visibleIfKey,
     this.visibleByDefault = true,
@@ -505,7 +505,7 @@ class ExpansionSettingsTile extends StatelessWidget {
       settingKey: visibleIfKey,
       defaultValue: visibleByDefault,
       childBuilder: (BuildContext context, bool visible) {
-        return (visible ?? false) ? _buildChild(context) : Container();
+        return visible ? _buildChild(context) : Container();
       },
     );
   }
@@ -570,15 +570,15 @@ class _SettingsTileDivider extends StatelessWidget {
 /// );
 class SimpleSettingsTile extends StatelessWidget {
   final String title;
-  final String subtitle;
-  final Icon icon;
-  final Widget screen;
-  final String visibleIfKey;
-  final String enabledIfKey;
+  final String? subtitle;
+  final Icon? icon;
+  final Widget? screen;
+  final String? visibleIfKey;
+  final String? enabledIfKey;
   final bool visibleByDefault;
 
   SimpleSettingsTile({
-    @required this.title,
+    required this.title,
     this.subtitle,
     this.icon,
     this.screen,
@@ -702,23 +702,23 @@ class CheckboxSettingsTile extends StatefulWidget {
   final String settingKey;
   final String title;
   final bool defaultValue;
-  final String subtitle;
-  final String subtitleIfOff;
-  final Icon icon;
-  final Widget screen;
-  final String visibleIfKey;
-  final String enabledIfKey;
+  final String? subtitle;
+  final String? subtitleIfOff;
+  final Icon? icon;
+  final Widget? screen;
+  final String? visibleIfKey;
+  final String? enabledIfKey;
   final bool visibleByDefault;
-  final String confirmText;
-  final String confirmTextToEnable;
-  final String confirmTextToDisable;
-  final String confirmModalTitle;
-  final String confirmModalCancelCaption;
-  final String confirmModalConfirmCaption;
+  final String? confirmText;
+  final String? confirmTextToEnable;
+  final String? confirmTextToDisable;
+  final String? confirmModalTitle;
+  final String? confirmModalCancelCaption;
+  final String? confirmModalConfirmCaption;
 
   CheckboxSettingsTile({
-    @required this.settingKey,
-    @required this.title,
+    required this.settingKey,
+    required this.title,
     this.defaultValue = false,
     this.subtitle,
     this.subtitleIfOff,
@@ -741,7 +741,7 @@ class CheckboxSettingsTile extends StatefulWidget {
 
 class _CheckboxSettingsTileState extends State<CheckboxSettingsTile>
     with _Confirmable, _Enableable {
-  bool value;
+  bool? value;
 
   @override
   void initState() {
@@ -785,7 +785,7 @@ class _CheckboxSettingsTileState extends State<CheckboxSettingsTile>
     );
   }
 
-  void _onChanged(bool newValue) {
+  void _onChanged(bool? newValue) {
     confirm(
       context: context,
       oldValue: value,
@@ -907,23 +907,23 @@ class SwitchSettingsTile extends StatefulWidget {
   final String settingKey;
   final bool defaultValue;
   final String title;
-  final String subtitle;
-  final String subtitleIfOff;
-  final Icon icon;
-  final Widget screen;
-  final String visibleIfKey;
-  final String enabledIfKey;
+  final String? subtitle;
+  final String? subtitleIfOff;
+  final Icon? icon;
+  final Widget? screen;
+  final String? visibleIfKey;
+  final String? enabledIfKey;
   final bool visibleByDefault;
-  final String confirmText;
-  final String confirmTextToEnable;
-  final String confirmTextToDisable;
-  final String confirmModalTitle;
-  final String confirmModalCancelCaption;
-  final String confirmModalConfirmCaption;
+  final String? confirmText;
+  final String? confirmTextToEnable;
+  final String? confirmTextToDisable;
+  final String? confirmModalTitle;
+  final String? confirmModalCancelCaption;
+  final String? confirmModalConfirmCaption;
 
   SwitchSettingsTile({
-    @required this.settingKey,
-    @required this.title,
+    required this.settingKey,
+    required this.title,
     this.defaultValue = false,
     this.subtitle,
     this.subtitleIfOff,
@@ -946,7 +946,7 @@ class SwitchSettingsTile extends StatefulWidget {
 
 class _SwitchSettingsTileState extends State<SwitchSettingsTile>
     with _Confirmable, _Enableable {
-  bool value;
+  bool? value;
 
   @override
   void initState() {
@@ -1080,24 +1080,24 @@ class RadioSettingsTile extends StatefulWidget {
   final String title;
   final Map<String, String> values;
   final defaultKey;
-  final String subtitle;
-  final String subtitleIfOff;
-  final Icon icon;
-  final Widget screen;
-  final String visibleIfKey;
-  final String enabledIfKey;
+  final String? subtitle;
+  final String? subtitleIfOff;
+  final Icon? icon;
+  final Widget? screen;
+  final String? visibleIfKey;
+  final String? enabledIfKey;
   final bool visibleByDefault;
   final bool expandable;
   final bool initiallyExpanded;
-  final String confirmText;
-  final String confirmModalTitle;
-  final String confirmModalCancelCaption;
-  final String confirmModalConfirmCaption;
+  final String? confirmText;
+  final String? confirmModalTitle;
+  final String? confirmModalCancelCaption;
+  final String? confirmModalConfirmCaption;
 
   RadioSettingsTile({
-    @required this.settingKey,
-    @required this.title,
-    @required this.values,
+    required this.settingKey,
+    required this.title,
+    required this.values,
     this.defaultKey,
     this.subtitle,
     this.subtitleIfOff,
@@ -1120,8 +1120,8 @@ class RadioSettingsTile extends StatefulWidget {
 
 class _RadioSettingsTileState extends State<RadioSettingsTile>
     with _Confirmable, _Enableable {
-  String selectedKey;
-  String selectedTitle;
+  String? selectedKey;
+  String? selectedTitle;
 
   @override
   void initState() {
@@ -1144,10 +1144,9 @@ class _RadioSettingsTileState extends State<RadioSettingsTile>
           defaultValue: selectedKey,
           childBuilder: (BuildContext context, String value) {
             _change(value);
-            List<Widget> elements = List<Widget>();
+            List<Widget> elements = <Widget>[];
             elements.add(_buildTile(value, enabled));
-            if (widget.values != null &&
-                widget.values.isNotEmpty &&
+            if (widget.values.isNotEmpty &&
                 !widget.expandable) {
               elements.addAll(_buildChildren(value, enabled));
             }
@@ -1159,7 +1158,7 @@ class _RadioSettingsTileState extends State<RadioSettingsTile>
   }
 
   Widget _buildTile(String groupValue, bool enabled) {
-    String subtitle = selectedTitle != null
+    String? subtitle = selectedTitle != null
         ? widget.subtitle ?? selectedTitle
         : widget.subtitleIfOff;
     return widget.expandable
@@ -1182,7 +1181,7 @@ class _RadioSettingsTileState extends State<RadioSettingsTile>
   }
 
   List<Widget> _buildChildren(String groupValue, bool enabled) {
-    List<Widget> elements = List<Widget>();
+    List<Widget> elements = <Widget>[];
     widget.values.forEach((optionKey, optionName) {
       elements.add(_SimpleRadioSettingsTile(
         title: optionName,
@@ -1195,10 +1194,10 @@ class _RadioSettingsTileState extends State<RadioSettingsTile>
     return elements;
   }
 
-  String _getNameByKey(String key) =>
+  String? _getNameByKey(String? key) =>
       widget.values.containsKey(key) ? widget.values[key] : null;
 
-  void _onChanged(String newKey) {
+  void _onChanged(String? newKey) {
     confirm(
       context: context,
       oldValue: selectedKey,
@@ -1216,25 +1215,25 @@ class _RadioSettingsTileState extends State<RadioSettingsTile>
     );
   }
 
-  void _change(String newKey) {
+  void _change(String? newKey) {
     selectedKey = newKey;
     selectedTitle = _getNameByKey(selectedKey);
   }
 }
 
 class _SimpleRadioSettingsTile extends StatelessWidget {
-  final String title;
+  final String? title;
   final String value;
   final String groupValue;
-  final ValueChanged<String> onChanged;
+  final ValueChanged<String?> onChanged;
   final bool enabled;
 
   _SimpleRadioSettingsTile({
-    @required this.title,
-    @required this.value,
-    @required this.groupValue,
-    @required this.onChanged,
-    @required this.enabled,
+    required this.title,
+    required this.value,
+    required this.groupValue,
+    required this.onChanged,
+    required this.enabled,
   });
 
   @override
@@ -1315,23 +1314,23 @@ class SliderSettingsTile extends StatefulWidget {
   final double minValue;
   final double maxValue;
   final double step;
-  final String subtitle;
-  final Icon icon;
-  final Icon minIcon;
-  final Icon maxIcon;
-  final String visibleIfKey;
-  final String enabledIfKey;
+  final String? subtitle;
+  final Icon? icon;
+  final Icon? minIcon;
+  final Icon? maxIcon;
+  final String? visibleIfKey;
+  final String? enabledIfKey;
   final bool visibleByDefault;
-  final String confirmText;
-  final String confirmTextToEnable;
-  final String confirmTextToDisable;
-  final String confirmModalTitle;
-  final String confirmModalCancelCaption;
-  final String confirmModalConfirmCaption;
+  final String? confirmText;
+  final String? confirmTextToEnable;
+  final String? confirmTextToDisable;
+  final String? confirmModalTitle;
+  final String? confirmModalCancelCaption;
+  final String? confirmModalConfirmCaption;
 
   SliderSettingsTile({
-    @required this.settingKey,
-    @required this.title,
+    required this.settingKey,
+    required this.title,
     this.defaultValue = 0.0,
     this.minValue = 0.0,
     this.maxValue = 100.0,
@@ -1357,7 +1356,7 @@ class SliderSettingsTile extends StatefulWidget {
 
 class _SliderSettingsTileState extends State<SliderSettingsTile>
     with _Confirmable, _Enableable {
-  double value;
+  double? value;
 
   @override
   void initState() {
@@ -1393,8 +1392,7 @@ class _SliderSettingsTileState extends State<SliderSettingsTile>
                 onChanged: _onChanged,
                 enabled: enabled,
                 leading: widget.minIcon ?? Container(),
-                trailing: widget.maxIcon ??
-                    (value != null ? Text(_getStringValue()) : Container()),
+                trailing: widget.maxIcon ?? Text(_getStringValue()),
               ),
             );
           },
@@ -1428,47 +1426,47 @@ class _SliderSettingsTileState extends State<SliderSettingsTile>
     while (1 ~/ widget.step > math.pow(10, n)) {
       n++;
     }
-    return value.toStringAsFixed(n);
+    return value!.toStringAsFixed(n);
   }
 }
 
 class _ModalSettingsTile extends StatefulWidget {
   final String settingKey;
-  final String defaultValue;
+  final String? defaultValue;
   final String title;
-  final String subtitle;
-  final Icon icon;
-  final Widget leading;
-  final String visibleIfKey;
-  final String enabledIfKey;
+  final String? subtitle;
+  final Icon? icon;
+  final Widget? leading;
+  final String? visibleIfKey;
+  final String? enabledIfKey;
   final bool visibleByDefault;
   final Function valueToTitle;
   final Function buildChild;
   final bool refreshStateOnChange;
-  final ValueChanged<String> onChanged;
+  final ValueChanged<String>? onChanged;
   final String cancelCaption;
   final String okCaption;
-  final String confirmText;
-  final String confirmTextToEnable;
-  final String confirmTextToDisable;
-  final String confirmModalTitle;
-  final String confirmModalCancelCaption;
-  final String confirmModalConfirmCaption;
-  final Function valueMap;
+  final String? confirmText;
+  final String? confirmTextToEnable;
+  final String? confirmTextToDisable;
+  final String? confirmModalTitle;
+  final String? confirmModalCancelCaption;
+  final String? confirmModalConfirmCaption;
+  final Function? valueMap;
   final obfuscateSubtitle;
 
   _ModalSettingsTile({
-    @required this.settingKey,
+    required this.settingKey,
     this.defaultValue,
-    @required this.title,
+    required this.title,
     this.subtitle,
     this.icon,
     this.leading,
     this.visibleIfKey,
     this.enabledIfKey,
     this.visibleByDefault = true,
-    @required this.valueToTitle,
-    @required this.buildChild,
+    required this.valueToTitle,
+    required this.buildChild,
     this.refreshStateOnChange = true,
     this.onChanged,
     this.cancelCaption = "Cancel",
@@ -1489,7 +1487,7 @@ class _ModalSettingsTile extends StatefulWidget {
 
 class __ModalSettingsTileState extends State<_ModalSettingsTile>
     with _Confirmable, _Enableable {
-  String value;
+  String? value;
 
   @override
   void initState() {
@@ -1531,7 +1529,7 @@ class __ModalSettingsTileState extends State<_ModalSettingsTile>
     );
   }
 
-  String _getSubtitle(String value) {
+  String? _getSubtitle(String value) {
     return widget.valueToTitle(value) != null
         ? widget.subtitle ??
             (!widget.obfuscateSubtitle
@@ -1550,9 +1548,9 @@ class __ModalSettingsTileState extends State<_ModalSettingsTile>
       onConfirm: () {
         setState(() {
           value =
-              widget.valueMap != null ? widget.valueMap(newValue) : newValue;
+              widget.valueMap != null ? widget.valueMap!(newValue) : newValue;
           Settings().save(widget.settingKey, value);
-          widget.onChanged?.call(value);
+          widget.onChanged?.call(value!);
         });
       },
       confirmText: widget.confirmText,
@@ -1587,15 +1585,15 @@ class _SettingsModal extends StatefulWidget {
   final Function buildChild;
   final String initialValue;
   final ValueChanged<String> onSelected;
-  final bool refreshStateOnChange;
+  final bool? refreshStateOnChange;
   final String cancelCaption;
   final String okCaption;
 
   _SettingsModal({
-    @required this.title,
-    @required this.buildChild,
-    @required this.initialValue,
-    @required this.onSelected,
+    required this.title,
+    required this.buildChild,
+    required this.initialValue,
+    required this.onSelected,
     this.refreshStateOnChange,
     this.cancelCaption = "Cancel",
     this.okCaption = "Ok",
@@ -1606,7 +1604,7 @@ class _SettingsModal extends StatefulWidget {
 }
 
 class __SettingsModalState extends State<_SettingsModal> {
-  String value;
+  late String value;
 
   @override
   void initState() {
@@ -1620,7 +1618,7 @@ class __SettingsModalState extends State<_SettingsModal> {
       title: Text(widget.title),
       content: widget.buildChild(value, _onChanged),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           child: Text(
             widget.cancelCaption,
             style: TextStyle(color: Theme.of(context).disabledColor),
@@ -1629,7 +1627,7 @@ class __SettingsModalState extends State<_SettingsModal> {
             Navigator.of(context).pop();
           },
         ),
-        FlatButton(
+        TextButton(
           child: Text(widget.okCaption),
           onPressed: () {
             Navigator.of(context).pop();
@@ -1641,7 +1639,7 @@ class __SettingsModalState extends State<_SettingsModal> {
   }
 
   void _onChanged(String newValue) {
-    if (widget.refreshStateOnChange) {
+    if (widget.refreshStateOnChange!) {
       setState(() {
         _handleChange(newValue);
       });
@@ -1701,20 +1699,20 @@ class __SettingsModalState extends State<_SettingsModal> {
 class RadioPickerSettingsTile extends StatelessWidget {
   final String settingKey;
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final Map<String, String> values;
-  final String defaultKey;
-  final Icon icon;
+  final String? defaultKey;
+  final Icon? icon;
   final String cancelCaption;
   final String okCaption;
-  final String visibleIfKey;
-  final String enabledIfKey;
+  final String? visibleIfKey;
+  final String? enabledIfKey;
   final bool visibleByDefault;
 
   RadioPickerSettingsTile({
-    @required this.settingKey,
-    @required this.title,
-    @required this.values,
+    required this.settingKey,
+    required this.title,
+    required this.values,
     this.defaultKey,
     this.subtitle,
     this.icon,
@@ -1737,7 +1735,7 @@ class RadioPickerSettingsTile extends StatelessWidget {
       visibleIfKey: visibleIfKey,
       enabledIfKey: enabledIfKey,
       visibleByDefault: visibleByDefault,
-      buildChild: (String value, Function onChanged) {
+      buildChild: (String value, Function(String?) onChanged) {
         // TODO: Scroll to the selected value.
         return Container(
           width: double.maxFinite,
@@ -1817,20 +1815,20 @@ class RadioPickerSettingsTile extends StatelessWidget {
 class TextFieldModalSettingsTile extends StatelessWidget {
   final String settingKey;
   final String title;
-  final String subtitle;
-  final String defaultValue;
-  final Icon icon;
+  final String? subtitle;
+  final String? defaultValue;
+  final Icon? icon;
   final String cancelCaption;
   final String okCaption;
-  final TextInputType keyboardType;
-  final String visibleIfKey;
-  final String enabledIfKey;
+  final TextInputType? keyboardType;
+  final String? visibleIfKey;
+  final String? enabledIfKey;
   final bool visibleByDefault;
   final bool obscureText;
 
   TextFieldModalSettingsTile({
-    @required this.settingKey,
-    @required this.title,
+    required this.settingKey,
+    required this.title,
     this.defaultValue,
     this.subtitle,
     this.icon,
@@ -1897,24 +1895,24 @@ class _ColorWidget {
 class _ColorPickerSettingsTile extends StatelessWidget with _ColorWidget {
   final String settingKey;
   final String title;
-  final String subtitle;
-  final String defaultValue;
-  final Icon icon;
-  final String visibleIfKey;
-  final String enabledIfKey;
+  final String? subtitle;
+  final String? defaultValue;
+  final Icon? icon;
+  final String? visibleIfKey;
+  final String? enabledIfKey;
   final bool visibleByDefault;
   final String cancelCaption;
   final String okCaption;
   final Function childBuilder;
   final Function valueToTitle;
-  final String confirmText;
-  final String confirmModalTitle;
-  final String confirmModalCancelCaption;
-  final String confirmModalConfirmCaption;
+  final String? confirmText;
+  final String? confirmModalTitle;
+  final String? confirmModalCancelCaption;
+  final String? confirmModalConfirmCaption;
 
   _ColorPickerSettingsTile({
-    @required this.settingKey,
-    @required this.title,
+    required this.settingKey,
+    required this.title,
     this.defaultValue,
     this.subtitle,
     this.icon,
@@ -1923,8 +1921,8 @@ class _ColorPickerSettingsTile extends StatelessWidget with _ColorWidget {
     this.visibleByDefault = true,
     this.cancelCaption = "Cancel",
     this.okCaption = "Ok",
-    @required this.childBuilder,
-    @required this.valueToTitle,
+    required this.childBuilder,
+    required this.valueToTitle,
     this.confirmText,
     this.confirmModalTitle,
     this.confirmModalCancelCaption,
@@ -2028,22 +2026,22 @@ class _ColorPickerSettingsTile extends StatelessWidget with _ColorWidget {
 class SimpleColorPickerSettingsTile extends StatelessWidget with _ColorWidget {
   final String settingKey;
   final String title;
-  final String subtitle;
-  final String defaultValue;
-  final Icon icon;
-  final String visibleIfKey;
-  final String enabledIfKey;
+  final String? subtitle;
+  final String? defaultValue;
+  final Icon? icon;
+  final String? visibleIfKey;
+  final String? enabledIfKey;
   final bool visibleByDefault;
   final String cancelCaption;
   final String okCaption;
-  final String confirmText;
-  final String confirmModalTitle;
-  final String confirmModalCancelCaption;
-  final String confirmModalConfirmCaption;
+  final String? confirmText;
+  final String? confirmModalTitle;
+  final String? confirmModalCancelCaption;
+  final String? confirmModalConfirmCaption;
 
   SimpleColorPickerSettingsTile({
-    @required this.settingKey,
-    @required this.title,
+    required this.settingKey,
+    required this.title,
     this.defaultValue,
     this.subtitle,
     this.icon,
@@ -2152,22 +2150,22 @@ class MaterialColorPickerSettingsTile extends StatelessWidget
     with _ColorWidget {
   final String settingKey;
   final String title;
-  final String subtitle;
-  final String defaultValue;
-  final Icon icon;
-  final String visibleIfKey;
-  final String enabledIfKey;
+  final String? subtitle;
+  final String? defaultValue;
+  final Icon? icon;
+  final String? visibleIfKey;
+  final String? enabledIfKey;
   final bool visibleByDefault;
   final String cancelCaption;
   final String okCaption;
-  final String confirmText;
-  final String confirmModalTitle;
-  final String confirmModalCancelCaption;
-  final String confirmModalConfirmCaption;
+  final String? confirmText;
+  final String? confirmModalTitle;
+  final String? confirmModalCancelCaption;
+  final String? confirmModalConfirmCaption;
 
   MaterialColorPickerSettingsTile({
-    @required this.settingKey,
-    @required this.title,
+    required this.settingKey,
+    required this.title,
     this.defaultValue,
     this.subtitle,
     this.icon,
@@ -2251,14 +2249,14 @@ class MaterialColorPickerSettingsTile extends StatelessWidget
 /// 	],
 /// );
 class SettingsContainer extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   final List<Widget> children;
-  final String visibleIfKey;
+  final String? visibleIfKey;
   final bool visibleByDefault;
 
   SettingsContainer({
     this.child,
-    this.children,
+    this.children = const <Widget>[],
     this.visibleIfKey,
     this.visibleByDefault = true,
   });
@@ -2291,13 +2289,13 @@ class SettingsContainer extends StatelessWidget {
 
 class _SettingsCheckbox extends StatelessWidget {
   final bool value;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool?> onChanged;
   final bool enabled;
 
   _SettingsCheckbox({
-    @required this.value,
-    @required this.onChanged,
-    @required this.enabled,
+    required this.value,
+    required this.onChanged,
+    required this.enabled,
   });
 
   @override
@@ -2315,9 +2313,9 @@ class _SettingsSwitch extends StatelessWidget {
   final bool enabled;
 
   _SettingsSwitch({
-    @required this.value,
-    @required this.onChanged,
-    @required this.enabled,
+    required this.value,
+    required this.onChanged,
+    required this.enabled,
   });
 
   @override
@@ -2332,14 +2330,14 @@ class _SettingsSwitch extends StatelessWidget {
 class _SettingsRadio extends StatelessWidget {
   final String groupValue;
   final String value;
-  final ValueChanged<String> onChanged;
+  final ValueChanged<String?> onChanged;
   final bool enabled;
 
   _SettingsRadio({
-    @required this.groupValue,
-    @required this.value,
-    @required this.onChanged,
-    @required this.enabled,
+    required this.groupValue,
+    required this.value,
+    required this.onChanged,
+    required this.enabled,
   });
 
   @override
@@ -2358,26 +2356,26 @@ class _SettingsSlider extends StatelessWidget {
   final double max;
   final double step;
   final ValueChanged<double> onChanged;
-  final Widget leading;
-  final Widget trailing;
+  final Widget? leading;
+  final Widget? trailing;
   final bool enabled;
 
   _SettingsSlider({
-    @required this.value,
-    @required this.min,
-    @required this.max,
-    @required this.step,
-    @required this.onChanged,
+    required this.value,
+    required this.min,
+    required this.max,
+    required this.step,
+    required this.onChanged,
     this.leading,
     this.trailing,
-    @required this.enabled,
+    required this.enabled,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        leading,
+        if (leading != null) leading!,
         Expanded(
           child: Slider(
             value: value,
@@ -2387,7 +2385,7 @@ class _SettingsSlider extends StatelessWidget {
             onChanged: enabled ? onChanged : null,
           ),
         ),
-        trailing,
+        if (trailing != null) trailing!,
       ],
     );
   }
@@ -2395,13 +2393,13 @@ class _SettingsSlider extends StatelessWidget {
 
 class _ConfirmableScreen extends StatefulWidget {
   final Widget child;
-  final String confirmText;
-  final String confirmModalTitle;
-  final String confirmModalCancelCaption;
-  final String confirmModalConfirmCaption;
+  final String? confirmText;
+  final String? confirmModalTitle;
+  final String? confirmModalCancelCaption;
+  final String? confirmModalConfirmCaption;
 
   _ConfirmableScreen({
-    @required this.child,
+    required this.child,
     this.confirmText,
     this.confirmModalTitle,
     this.confirmModalCancelCaption,
@@ -2442,17 +2440,17 @@ class __ConfirmableScreenState extends State<_ConfirmableScreen>
 
 class _Confirmable {
   confirm({
-    @required BuildContext context,
+    required BuildContext context,
     oldValue,
     newValue,
-    Function onConfirm,
-    Function onCancel,
-    String confirmText,
-    String confirmTextToEnable,
-    String confirmTextToDisable,
-    String confirmModalTitle,
-    String confirmModalCancelCaption,
-    String confirmModalConfirmCaption,
+    Function? onConfirm,
+    Function? onCancel,
+    String? confirmText,
+    String? confirmTextToEnable,
+    String? confirmTextToDisable,
+    String? confirmModalTitle,
+    String? confirmModalCancelCaption,
+    String? confirmModalConfirmCaption,
   }) {
     if (newValue == false &&
         oldValue != newValue &&
@@ -2495,14 +2493,14 @@ class _Confirmable {
     onConfirm?.call();
   }
 
-  Future<Widget> _showDialog({
-    @required BuildContext context,
-    Function onConfirm,
-    Function onCancel,
-    String confirmText,
-    String confirmModalTitle,
-    String confirmModalCancelCaption,
-    String confirmModalConfirmCaption,
+  Future<Widget?> _showDialog({
+    required BuildContext context,
+    Function? onConfirm,
+    Function? onCancel,
+    String? confirmText,
+    String? confirmModalTitle,
+    String? confirmModalCancelCaption,
+    String? confirmModalConfirmCaption,
   }) {
     return showDialog(
       context: context,
@@ -2511,11 +2509,11 @@ class _Confirmable {
           title: confirmModalTitle == ""
               ? null
               : Text(confirmModalTitle ?? "Confirm"),
-          content: Text(confirmText),
+          content: confirmText != null ? Text(confirmText) : null,
           actions: <Widget>[
             confirmModalCancelCaption == ""
                 ? Container()
-                : FlatButton(
+                : TextButton(
                     child: Text(
                       confirmModalCancelCaption ?? "Cancel",
                       style: TextStyle(color: Theme.of(context).disabledColor),
@@ -2527,7 +2525,7 @@ class _Confirmable {
                   ),
             confirmModalConfirmCaption == ""
                 ? Container()
-                : FlatButton(
+                : TextButton(
                     child: Text(confirmModalConfirmCaption ?? "Ok"),
                     onPressed: () {
                       Navigator.of(context).pop();
@@ -2541,12 +2539,14 @@ class _Confirmable {
   }
 }
 
+typedef ChildBuilder = Widget Function(BuildContext context, bool visibleByDefault);
+
 class _Enableable {
   Widget wrapEnableable({
-    @required BuildContext context,
-    @required String enabledIfKey,
-    @required bool visibleByDefault,
-    @required Function childBuilder,
+    required BuildContext context,
+    required String? enabledIfKey,
+    required bool visibleByDefault,
+    required ChildBuilder childBuilder,
   }) {
     if (enabledIfKey == null) {
       return childBuilder(context, visibleByDefault);
@@ -2560,10 +2560,10 @@ class _Enableable {
   }
 
   StreamBuilder<bool> __onEnabledChanged({
-    @required BuildContext context,
-    @required String enabledIfKey,
-    @required bool visibleByDefault,
-    @required Function childBuilder,
+    required BuildContext context,
+    required String enabledIfKey,
+    required bool visibleByDefault,
+    required ChildBuilder childBuilder,
   }) {
     return Settings().onBoolChanged(
       settingKey: enabledIfKey,

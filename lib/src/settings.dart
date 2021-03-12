@@ -18,7 +18,7 @@ class Settings {
   Map<String, _SettingStream<int>> _intStreams =
       Map<String, _SettingStream<int>>();
 
-  _SettingStream _getIntStreamOf(String settingKey) {
+  _SettingStream? _getIntStreamOf(String settingKey) {
     if (_intStreams.containsKey(settingKey)) {
       return _intStreams[settingKey];
     }
@@ -28,12 +28,12 @@ class Settings {
   }
 
   StreamBuilder<int> onIntChanged({
-    @required String settingKey,
-    @required int defaultValue,
-    @required Function childBuilder,
+    required String settingKey,
+    required int defaultValue,
+    required Function childBuilder,
   }) {
     return StreamBuilder<int>(
-      stream: _getIntStreamOf(settingKey).stream,
+      stream: _getIntStreamOf(settingKey)!.stream as Stream<int>?,
       initialData: defaultValue,
       builder: (context, snapshot) {
         return childBuilder(context, snapshot.data);
@@ -43,7 +43,7 @@ class Settings {
 
   void _intChanged(String settingKey, int value) {
     if (_intStreams.containsKey(settingKey)) {
-      _intStreams[settingKey].push(value);
+      _intStreams[settingKey]!.push(value);
     }
   }
 
@@ -52,22 +52,22 @@ class Settings {
   Map<String, _SettingStream<bool>> _boolStreams =
       Map<String, _SettingStream<bool>>();
 
-  _SettingStream _getBoolStreamOf(String settingKey) {
+  _SettingStream? _getBoolStreamOf(String? settingKey) {
     if (_boolStreams.containsKey(settingKey)) {
       return _boolStreams[settingKey];
     }
     _SettingStream<bool> stream = _SettingStream<bool>();
-    _boolStreams[settingKey] = stream;
+    _boolStreams[settingKey!] = stream;
     return stream;
   }
 
   StreamBuilder<bool> onBoolChanged({
-    @required String settingKey,
-    @required bool defaultValue,
-    @required Function childBuilder,
+    required String? settingKey,
+    required bool defaultValue,
+    required Function childBuilder,
   }) {
     return StreamBuilder<bool>(
-      stream: _getBoolStreamOf(settingKey).stream,
+      stream: _getBoolStreamOf(settingKey)!.stream as Stream<bool>?,
       initialData: defaultValue,
       builder: (context, snapshot) {
         return childBuilder(context, snapshot.data);
@@ -77,7 +77,7 @@ class Settings {
 
   void _boolChanged(String settingKey, bool value) {
     if (_boolStreams.containsKey(settingKey)) {
-      _boolStreams[settingKey].push(value);
+      _boolStreams[settingKey]!.push(value);
     }
   }
 
@@ -86,7 +86,7 @@ class Settings {
   Map<String, _SettingStream<String>> _stringStreams =
       Map<String, _SettingStream<String>>();
 
-  _SettingStream _getStringStreamOf(String settingKey) {
+  _SettingStream? _getStringStreamOf(String settingKey) {
     if (_stringStreams.containsKey(settingKey)) {
       return _stringStreams[settingKey];
     }
@@ -96,12 +96,12 @@ class Settings {
   }
 
   StreamBuilder<String> onStringChanged({
-    @required String settingKey,
-    @required String defaultValue,
-    @required Function childBuilder,
+    required String settingKey,
+    required String? defaultValue,
+    required Function childBuilder,
   }) {
     return StreamBuilder<String>(
-      stream: _getStringStreamOf(settingKey).stream,
+      stream: _getStringStreamOf(settingKey)!.stream as Stream<String>?,
       initialData: defaultValue,
       builder: (context, snapshot) {
         return childBuilder(context, snapshot.data);
@@ -111,7 +111,7 @@ class Settings {
 
   void _stringChanged(String settingKey, String value) {
     if (_stringStreams.containsKey(settingKey)) {
-      _stringStreams[settingKey].push(value);
+      _stringStreams[settingKey]!.push(value);
     }
   }
 
@@ -120,7 +120,7 @@ class Settings {
   Map<String, _SettingStream<double>> _doubleStreams =
       Map<String, _SettingStream<double>>();
 
-  _SettingStream _getDoubleStreamOf(String settingKey) {
+  _SettingStream? _getDoubleStreamOf(String settingKey) {
     if (_doubleStreams.containsKey(settingKey)) {
       return _doubleStreams[settingKey];
     }
@@ -130,12 +130,12 @@ class Settings {
   }
 
   StreamBuilder<double> onDoubleChanged({
-    @required String settingKey,
-    @required double defaultValue,
-    @required Function childBuilder,
+    required String settingKey,
+    required double? defaultValue,
+    required Function childBuilder,
   }) {
     return StreamBuilder<double>(
-      stream: _getDoubleStreamOf(settingKey).stream,
+      stream: _getDoubleStreamOf(settingKey)!.stream as Stream<double>?,
       initialData: defaultValue,
       builder: (context, snapshot) {
         return childBuilder(context, snapshot.data);
@@ -145,7 +145,7 @@ class Settings {
 
   void _doubleChanged(String settingKey, double value) {
     if (_doubleStreams.containsKey(settingKey)) {
-      _doubleStreams[settingKey].push(value);
+      _doubleStreams[settingKey]!.push(value);
     }
   }
 
@@ -155,9 +155,9 @@ class Settings {
     return (await SharedPreferences.getInstance()).getInt(key) ?? defaultValue;
   }
 
-  Future<String> getString(String key, String defaultValue) async {
+  Future<String> getString(String key, String? defaultValue) async {
     return (await SharedPreferences.getInstance()).getString(key) ??
-        defaultValue;
+        defaultValue!;
   }
 
   Future<double> getDouble(String key, double defaultValue) async {
@@ -169,7 +169,7 @@ class Settings {
     return (await SharedPreferences.getInstance()).getBool(key) ?? defaultValue;
   }
 
-  void pingString(String key, String defaultValue) async {
+  void pingString(String key, String? defaultValue) async {
     _stringChanged(key, await getString(key, defaultValue));
   }
 
