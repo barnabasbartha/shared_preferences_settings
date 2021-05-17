@@ -83,8 +83,7 @@ class Settings {
 
   //
 
-  Map<String, _SettingStream<String>> _stringStreams =
-      Map<String, _SettingStream<String>>();
+  var _stringStreams = Map<String, _SettingStream<String?>>();
 
   _SettingStream? _getStringStreamOf(String settingKey) {
     if (_stringStreams.containsKey(settingKey)) {
@@ -109,7 +108,7 @@ class Settings {
     );
   }
 
-  void _stringChanged(String settingKey, String value) {
+  void _stringChanged(String settingKey, String? value) {
     if (_stringStreams.containsKey(settingKey)) {
       _stringStreams[settingKey]!.push(value);
     }
@@ -155,9 +154,9 @@ class Settings {
     return (await SharedPreferences.getInstance()).getInt(key) ?? defaultValue;
   }
 
-  Future<String> getString(String key, String? defaultValue) async {
+  Future<String?> getString(String key, String? defaultValue) async {
     return (await SharedPreferences.getInstance()).getString(key) ??
-        defaultValue!;
+        defaultValue;
   }
 
   Future<double> getDouble(String key, double defaultValue) async {
