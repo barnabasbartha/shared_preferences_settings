@@ -52,17 +52,17 @@ class Settings {
   Map<String, _SettingStream<bool>> _boolStreams =
       Map<String, _SettingStream<bool>>();
 
-  _SettingStream? _getBoolStreamOf(String? settingKey) {
+  _SettingStream? _getBoolStreamOf(String settingKey) {
     if (_boolStreams.containsKey(settingKey)) {
       return _boolStreams[settingKey];
     }
     _SettingStream<bool> stream = _SettingStream<bool>();
-    _boolStreams[settingKey!] = stream;
+    _boolStreams[settingKey] = stream;
     return stream;
   }
 
   StreamBuilder<bool> onBoolChanged({
-    required String? settingKey,
+    required String settingKey,
     required bool defaultValue,
     required Function childBuilder,
   }) {
