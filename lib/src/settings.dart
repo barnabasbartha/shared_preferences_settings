@@ -15,8 +15,7 @@ class Settings {
 
   //
 
-  Map<String, _SettingStream<int>> _intStreams =
-      Map<String, _SettingStream<int>>();
+  var _intStreams = Map<String, _SettingStream<int>>();
 
   _SettingStream? _getIntStreamOf(String settingKey) {
     if (_intStreams.containsKey(settingKey)) {
@@ -49,20 +48,19 @@ class Settings {
 
   //
 
-  Map<String, _SettingStream<bool>> _boolStreams =
-      Map<String, _SettingStream<bool>>();
+  var _boolStreams = Map<String, _SettingStream<bool>>();
 
-  _SettingStream? _getBoolStreamOf(String? settingKey) {
+  _SettingStream? _getBoolStreamOf(String settingKey) {
     if (_boolStreams.containsKey(settingKey)) {
       return _boolStreams[settingKey];
     }
     _SettingStream<bool> stream = _SettingStream<bool>();
-    _boolStreams[settingKey!] = stream;
+    _boolStreams[settingKey] = stream;
     return stream;
   }
 
   StreamBuilder<bool> onBoolChanged({
-    required String? settingKey,
+    required String settingKey,
     required bool defaultValue,
     required Function childBuilder,
   }) {
@@ -83,8 +81,7 @@ class Settings {
 
   //
 
-  Map<String, _SettingStream<String>> _stringStreams =
-      Map<String, _SettingStream<String>>();
+  var _stringStreams = Map<String, _SettingStream<String?>>();
 
   _SettingStream? _getStringStreamOf(String settingKey) {
     if (_stringStreams.containsKey(settingKey)) {
@@ -109,16 +106,13 @@ class Settings {
     );
   }
 
-  void _stringChanged(String settingKey, String value) {
-    if (_stringStreams.containsKey(settingKey)) {
-      _stringStreams[settingKey]!.push(value);
-    }
+  void _stringChanged(String settingKey, String? value) {
+    _stringStreams[settingKey]?.push(value);
   }
 
   //
 
-  Map<String, _SettingStream<double>> _doubleStreams =
-      Map<String, _SettingStream<double>>();
+  var _doubleStreams = Map<String, _SettingStream<double>>();
 
   _SettingStream? _getDoubleStreamOf(String settingKey) {
     if (_doubleStreams.containsKey(settingKey)) {
@@ -155,9 +149,9 @@ class Settings {
     return (await SharedPreferences.getInstance()).getInt(key) ?? defaultValue;
   }
 
-  Future<String> getString(String key, String? defaultValue) async {
+  Future<String?> getString(String key, String? defaultValue) async {
     return (await SharedPreferences.getInstance()).getString(key) ??
-        defaultValue!;
+        defaultValue;
   }
 
   Future<double> getDouble(String key, double defaultValue) async {
