@@ -169,19 +169,19 @@ class Settings {
     return (await SharedPreferences.getInstance()).getBool(key) ?? defaultValue;
   }
 
-  void pingString(String key, String? defaultValue) async {
+  Future<void> pingString(String key, String? defaultValue) async {
     _stringChanged(key, await getString(key, defaultValue));
   }
 
-  void pingDouble(String key, double defaultValue) async {
+  Future<void> pingDouble(String key, double defaultValue) async {
     _doubleChanged(key, await getDouble(key, defaultValue));
   }
 
-  void pingBool(String key, bool defaultValue) async {
+  Future<void> pingBool(String key, bool defaultValue) async {
     _boolChanged(key, await getBool(key, defaultValue));
   }
 
-  void save(String key, dynamic value) async {
+  Future<void> save(String key, dynamic value) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     if (value is int) {
       await sharedPreferences.setInt(key, value);
