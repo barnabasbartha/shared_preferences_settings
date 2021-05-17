@@ -1638,13 +1638,13 @@ class __SettingsModalState extends State<_SettingsModal> {
     );
   }
 
-  void _onChanged(String newValue) {
+  void _onChanged(String? newValue) {
     if (widget.refreshStateOnChange!) {
       setState(() {
-        _handleChange(newValue);
+        _handleChange(newValue!);
       });
     } else {
-      _handleChange(newValue);
+      _handleChange(newValue!);
     }
   }
 
