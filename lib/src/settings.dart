@@ -15,8 +15,7 @@ class Settings {
 
   //
 
-  Map<String, _SettingStream<int>> _intStreams =
-      Map<String, _SettingStream<int>>();
+  var _intStreams = Map<String, _SettingStream<int>>();
 
   _SettingStream? _getIntStreamOf(String settingKey) {
     if (_intStreams.containsKey(settingKey)) {
@@ -49,8 +48,7 @@ class Settings {
 
   //
 
-  Map<String, _SettingStream<bool>> _boolStreams =
-      Map<String, _SettingStream<bool>>();
+  var _boolStreams = Map<String, _SettingStream<bool>>();
 
   _SettingStream? _getBoolStreamOf(String settingKey) {
     if (_boolStreams.containsKey(settingKey)) {
@@ -114,8 +112,7 @@ class Settings {
 
   //
 
-  Map<String, _SettingStream<double>> _doubleStreams =
-      Map<String, _SettingStream<double>>();
+  var _doubleStreams = Map<String, _SettingStream<double>>();
 
   _SettingStream? _getDoubleStreamOf(String settingKey) {
     if (_doubleStreams.containsKey(settingKey)) {
