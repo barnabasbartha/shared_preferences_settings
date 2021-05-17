@@ -109,9 +109,7 @@ class Settings {
   }
 
   void _stringChanged(String settingKey, String? value) {
-    if (_stringStreams.containsKey(settingKey)) {
-      _stringStreams[settingKey]!.push(value);
-    }
+    _stringStreams[settingKey]?.push(value);
   }
 
   //
