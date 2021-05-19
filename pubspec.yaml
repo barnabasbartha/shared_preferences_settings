@@ -5,7 +5,7 @@ repository: https://github.com/BarthaBRW/shared_preferences_settings
 documentation: https://github.com/BarthaBRW/shared_preferences_settings
 homepage: https://github.com/BarthaBRW/shared_preferences_settings
 
-version: 2.0.0
+version: 2.1.0
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -14,9 +14,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  shared_preferences: ^2.0.4
-  rxdart: ^0.26.0
-  flutter_colorpicker: ^0.4.0-nullsafety.0
+  shared_preferences: ^2.0.5
+  rxdart: ^0.27.0
+  flutter_colorpicker: ^0.4.0
 
 dev_dependencies:
   flutter_test:

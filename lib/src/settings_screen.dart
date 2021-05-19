@@ -206,8 +206,7 @@ class SettingsToggleScreen extends StatelessWidget {
     List<Widget> elements = [
       SwitchSettingsTile(
         settingKey: settingKey,
-        title:
-            value == false ? subtitleIfOff : subtitle,
+        title: value == false ? subtitleIfOff : subtitle,
         defaultValue: defaultValue,
         confirmText: confirmText,
         confirmTextToEnable: confirmTextToEnable,
@@ -276,7 +275,7 @@ class SettingsTileGroup extends StatelessWidget {
       return _buildChild(context);
     }
     return Settings().onBoolChanged(
-      settingKey: visibleIfKey,
+      settingKey: visibleIfKey!,
       defaultValue: visibleByDefault,
       childBuilder: (BuildContext context, bool visible) {
         return visible ? _buildChild(context) : Container();
@@ -372,7 +371,7 @@ class __SettingsTileState extends State<_SettingsTile>
       return _wrapEnableable(context)!;
     }
     return Settings().onBoolChanged(
-      settingKey: widget.visibleIfKey,
+      settingKey: widget.visibleIfKey!,
       defaultValue: widget.visibleByDefault,
       childBuilder: (BuildContext context, bool visible) {
         return visible ? _wrapEnableable(context) : Container();
@@ -502,7 +501,7 @@ class ExpansionSettingsTile extends StatelessWidget {
       return _buildChild(context);
     }
     return Settings().onBoolChanged(
-      settingKey: visibleIfKey,
+      settingKey: visibleIfKey!,
       defaultValue: visibleByDefault,
       childBuilder: (BuildContext context, bool visible) {
         return visible ? _buildChild(context) : Container();
@@ -1146,8 +1145,7 @@ class _RadioSettingsTileState extends State<RadioSettingsTile>
             _change(value);
             List<Widget> elements = <Widget>[];
             elements.add(_buildTile(value, enabled));
-            if (widget.values.isNotEmpty &&
-                !widget.expandable) {
+            if (widget.values.isNotEmpty && !widget.expandable) {
               elements.addAll(_buildChildren(value, enabled));
             }
             return Column(children: elements);
@@ -2267,7 +2265,7 @@ class SettingsContainer extends StatelessWidget {
       return _buildChild();
     }
     return Settings().onBoolChanged(
-      settingKey: visibleIfKey,
+      settingKey: visibleIfKey!,
       defaultValue: visibleByDefault,
       childBuilder: (BuildContext context, bool visible) {
         return visible ? _buildChild() : Container();
@@ -2539,7 +2537,8 @@ class _Confirmable {
   }
 }
 
-typedef ChildBuilder = Widget Function(BuildContext context, bool visibleByDefault);
+typedef ChildBuilder = Widget Function(
+    BuildContext context, bool visibleByDefault);
 
 class _Enableable {
   Widget wrapEnableable({
