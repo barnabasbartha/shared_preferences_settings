@@ -15,24 +15,24 @@ class Settings {
 
   //
 
-  var _intStreams = Map<String, _SettingStream<int>>();
+  final _intStreams = Map<String, _SettingStream<int?>>();
 
   _SettingStream? _getIntStreamOf(String settingKey) {
     if (_intStreams.containsKey(settingKey)) {
       return _intStreams[settingKey];
     }
-    _SettingStream<int> stream = _SettingStream<int>();
+    final stream = _SettingStream<int?>();
     _intStreams[settingKey] = stream;
     return stream;
   }
 
-  StreamBuilder<int> onIntChanged({
+  StreamBuilder<int?> onIntChanged({
     required String settingKey,
     required int defaultValue,
-    required Function childBuilder,
+    required Widget Function(BuildContext, int?) childBuilder,
   }) {
-    return StreamBuilder<int>(
-      stream: _getIntStreamOf(settingKey)!.stream as Stream<int>?,
+    return StreamBuilder<int?>(
+      stream: _getIntStreamOf(settingKey)!.stream as Stream<int?>?,
       initialData: defaultValue,
       builder: (context, snapshot) {
         return childBuilder(context, snapshot.data);
@@ -48,24 +48,24 @@ class Settings {
 
   //
 
-  var _boolStreams = Map<String, _SettingStream<bool>>();
+  final _boolStreams = Map<String, _SettingStream<bool?>>();
 
   _SettingStream? _getBoolStreamOf(String settingKey) {
     if (_boolStreams.containsKey(settingKey)) {
       return _boolStreams[settingKey];
     }
-    _SettingStream<bool> stream = _SettingStream<bool>();
+    final stream = _SettingStream<bool?>();
     _boolStreams[settingKey] = stream;
     return stream;
   }
 
-  StreamBuilder<bool> onBoolChanged({
+  StreamBuilder<bool?> onBoolChanged({
     required String settingKey,
-    required bool defaultValue,
-    required Function childBuilder,
+    required bool? defaultValue,
+    required Widget Function(BuildContext, bool?) childBuilder,
   }) {
-    return StreamBuilder<bool>(
-      stream: _getBoolStreamOf(settingKey)!.stream as Stream<bool>?,
+    return StreamBuilder<bool?>(
+      stream: _getBoolStreamOf(settingKey)!.stream as Stream<bool?>?,
       initialData: defaultValue,
       builder: (context, snapshot) {
         return childBuilder(context, snapshot.data);
@@ -81,24 +81,24 @@ class Settings {
 
   //
 
-  var _stringStreams = Map<String, _SettingStream<String?>>();
+  final _stringStreams = Map<String, _SettingStream<String?>>();
 
   _SettingStream? _getStringStreamOf(String settingKey) {
     if (_stringStreams.containsKey(settingKey)) {
       return _stringStreams[settingKey];
     }
-    _SettingStream<String> stream = _SettingStream<String>();
+    final stream = _SettingStream<String?>();
     _stringStreams[settingKey] = stream;
     return stream;
   }
 
-  StreamBuilder<String> onStringChanged({
+  StreamBuilder<String?> onStringChanged({
     required String settingKey,
     required String? defaultValue,
-    required Function childBuilder,
+    required Widget Function(BuildContext, String?) childBuilder,
   }) {
-    return StreamBuilder<String>(
-      stream: _getStringStreamOf(settingKey)!.stream as Stream<String>?,
+    return StreamBuilder<String?>(
+      stream: _getStringStreamOf(settingKey)!.stream as Stream<String?>?,
       initialData: defaultValue,
       builder: (context, snapshot) {
         return childBuilder(context, snapshot.data);
@@ -112,24 +112,24 @@ class Settings {
 
   //
 
-  var _doubleStreams = Map<String, _SettingStream<double>>();
+  final _doubleStreams = Map<String, _SettingStream<double?>>();
 
   _SettingStream? _getDoubleStreamOf(String settingKey) {
     if (_doubleStreams.containsKey(settingKey)) {
       return _doubleStreams[settingKey];
     }
-    _SettingStream<double> stream = _SettingStream<double>();
+    final stream = _SettingStream<double?>();
     _doubleStreams[settingKey] = stream;
     return stream;
   }
 
-  StreamBuilder<double> onDoubleChanged({
+  StreamBuilder<double?> onDoubleChanged({
     required String settingKey,
     required double? defaultValue,
-    required Function childBuilder,
+    required Widget Function(BuildContext, double?) childBuilder,
   }) {
-    return StreamBuilder<double>(
-      stream: _getDoubleStreamOf(settingKey)!.stream as Stream<double>?,
+    return StreamBuilder<double?>(
+      stream: _getDoubleStreamOf(settingKey)!.stream as Stream<double?>?,
       initialData: defaultValue,
       builder: (context, snapshot) {
         return childBuilder(context, snapshot.data);
@@ -194,11 +194,11 @@ class Settings {
 }
 
 class _SettingStream<T> {
-  final BehaviorSubject<T> _subject = BehaviorSubject<T>();
+  final BehaviorSubject<T?> _subject = BehaviorSubject<T?>();
 
-  Stream<T> get stream => _subject.stream;
+  Stream<T?> get stream => _subject.stream;
 
-  void push(T data) {
+  void push(T? data) {
     _subject.add(data);
   }
 }
