@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,7 +14,7 @@ class Settings {
 
   //
 
-  final _intStreams = Map<String, _SettingStream<int?>>();
+  final _intStreams = <String, _SettingStream<int?>>{};
 
   _SettingStream? _getIntStreamOf(String settingKey) {
     if (_intStreams.containsKey(settingKey)) {
@@ -48,7 +47,7 @@ class Settings {
 
   //
 
-  final _boolStreams = Map<String, _SettingStream<bool?>>();
+  final _boolStreams = <String, _SettingStream<bool?>>{};
 
   _SettingStream? _getBoolStreamOf(String settingKey) {
     if (_boolStreams.containsKey(settingKey)) {
@@ -81,7 +80,7 @@ class Settings {
 
   //
 
-  final _stringStreams = Map<String, _SettingStream<String?>>();
+  final _stringStreams = <String, _SettingStream<String?>>{};
 
   _SettingStream? _getStringStreamOf(String settingKey) {
     if (_stringStreams.containsKey(settingKey)) {
@@ -112,7 +111,7 @@ class Settings {
 
   //
 
-  final _doubleStreams = Map<String, _SettingStream<double?>>();
+  final _doubleStreams = <String, _SettingStream<double?>>{};
 
   _SettingStream? _getDoubleStreamOf(String settingKey) {
     if (_doubleStreams.containsKey(settingKey)) {
