@@ -54,7 +54,8 @@ class SettingsScreen extends StatelessWidget {
   final String? confirmModalConfirmCaption;
   final Color? appBarBackgroundColor;
 
-  SettingsScreen({
+  const SettingsScreen({
+    super.key,
     required this.title,
     required this.children,
     this.confirmText,
@@ -67,6 +68,10 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _ConfirmableScreen(
+      confirmText: confirmText,
+      confirmModalTitle: confirmModalTitle,
+      confirmModalCancelCaption: confirmModalCancelCaption,
+      confirmModalConfirmCaption: confirmModalConfirmCaption,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: appBarBackgroundColor,
@@ -79,10 +84,6 @@ class SettingsScreen extends StatelessWidget {
           },
         ),
       ),
-      confirmText: confirmText,
-      confirmModalTitle: confirmModalTitle,
-      confirmModalCancelCaption: confirmModalCancelCaption,
-      confirmModalConfirmCaption: confirmModalConfirmCaption,
     );
   }
 }
@@ -164,7 +165,8 @@ class SettingsToggleScreen extends StatelessWidget {
   final String? confirmModalCancelCaption;
   final String? confirmModalConfirmCaption;
 
-  SettingsToggleScreen({
+  const SettingsToggleScreen({
+    super.key,
     required this.title,
     required this.settingKey,
     required this.children,
@@ -189,13 +191,13 @@ class SettingsToggleScreen extends StatelessWidget {
         return _ConfirmableScreen(
           child: SettingsScreen(
             title: title,
+            confirmText: confirmText,
             children: _buildChildren(
               value,
               value == false && childrenIfOff != null
                   ? childrenIfOff!
                   : children,
             ),
-            confirmText: confirmText,
           ),
         );
       },
@@ -261,7 +263,8 @@ class SettingsTileGroup extends StatelessWidget {
   final String? visibleIfKey;
   final bool visibleByDefault;
 
-  SettingsTileGroup({
+  const SettingsTileGroup({
+    super.key,
     required this.title,
     this.subtitle,
     required this.children,
@@ -292,7 +295,7 @@ class SettingsTileGroup extends StatelessWidget {
           child: Text(
             title.toUpperCase(),
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
               fontSize: 12.0,
               fontWeight: FontWeight.bold,
             ),
@@ -330,7 +333,7 @@ class _SettingsTile extends StatefulWidget {
   final bool visibleByDefault;
   final Function? onTap;
 
-  _SettingsTile({
+  const _SettingsTile({
     required this.title,
     this.subtitle,
     this.icon,
@@ -486,7 +489,8 @@ class ExpansionSettingsTile extends StatelessWidget {
   final bool visibleByDefault;
   final bool initiallyExpanded;
 
-  ExpansionSettingsTile({
+  const ExpansionSettingsTile({
+    super.key,
     required this.title,
     this.icon,
     required this.children,
@@ -512,9 +516,9 @@ class ExpansionSettingsTile extends StatelessWidget {
   Widget _buildChild(BuildContext context) {
     return ExpansionTile(
       title: Text(title),
-      children: children,
       leading: icon,
       initiallyExpanded: initiallyExpanded,
+      children: children,
     );
   }
 }
@@ -522,7 +526,7 @@ class ExpansionSettingsTile extends StatelessWidget {
 class _SettingsTileDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Divider(
+    return const Divider(
       height: 0.0,
     );
   }
@@ -576,7 +580,8 @@ class SimpleSettingsTile extends StatelessWidget {
   final String? enabledIfKey;
   final bool visibleByDefault;
 
-  SimpleSettingsTile({
+  const SimpleSettingsTile({
+    super.key,
     required this.title,
     this.subtitle,
     this.icon,
@@ -715,7 +720,8 @@ class CheckboxSettingsTile extends StatefulWidget {
   final String? confirmModalCancelCaption;
   final String? confirmModalConfirmCaption;
 
-  CheckboxSettingsTile({
+  const CheckboxSettingsTile({
+    super.key,
     required this.settingKey,
     required this.title,
     this.defaultValue = false,
@@ -920,7 +926,8 @@ class SwitchSettingsTile extends StatefulWidget {
   final String? confirmModalCancelCaption;
   final String? confirmModalConfirmCaption;
 
-  SwitchSettingsTile({
+  const SwitchSettingsTile({
+    super.key,
     required this.settingKey,
     required this.title,
     this.defaultValue = false,
@@ -1078,7 +1085,7 @@ class RadioSettingsTile extends StatefulWidget {
   final String settingKey;
   final String title;
   final Map<String, String> values;
-  final defaultKey;
+  final String? defaultKey;
   final String? subtitle;
   final String? subtitleIfOff;
   final Icon? icon;
@@ -1093,7 +1100,8 @@ class RadioSettingsTile extends StatefulWidget {
   final String? confirmModalCancelCaption;
   final String? confirmModalConfirmCaption;
 
-  RadioSettingsTile({
+  const RadioSettingsTile({
+    super.key,
     required this.settingKey,
     required this.title,
     required this.values,
@@ -1226,7 +1234,7 @@ class _SimpleRadioSettingsTile extends StatelessWidget {
   final ValueChanged<String?> onChanged;
   final bool enabled;
 
-  _SimpleRadioSettingsTile({
+  const _SimpleRadioSettingsTile({
     required this.title,
     required this.value,
     required this.groupValue,
@@ -1326,7 +1334,8 @@ class SliderSettingsTile extends StatefulWidget {
   final String? confirmModalCancelCaption;
   final String? confirmModalConfirmCaption;
 
-  SliderSettingsTile({
+  const SliderSettingsTile({
+    super.key,
     required this.settingKey,
     required this.title,
     this.defaultValue = 0.0,
@@ -1451,9 +1460,9 @@ class _ModalSettingsTile extends StatefulWidget {
   final String? confirmModalCancelCaption;
   final String? confirmModalConfirmCaption;
   final Function? valueMap;
-  final obfuscateSubtitle;
+  final bool obfuscateSubtitle;
 
-  _ModalSettingsTile({
+  const _ModalSettingsTile({
     required this.settingKey,
     this.defaultValue,
     required this.title,
@@ -1466,11 +1475,14 @@ class _ModalSettingsTile extends StatefulWidget {
     required this.valueToTitle,
     required this.buildChild,
     this.refreshStateOnChange = true,
+    // ignore: unused_element
     this.onChanged,
     this.cancelCaption = "Cancel",
     this.okCaption = "Ok",
     this.confirmText,
+    // ignore: unused_element
     this.confirmTextToEnable,
+    // ignore: unused_element
     this.confirmTextToDisable,
     this.confirmModalTitle,
     this.confirmModalCancelCaption,
@@ -1532,7 +1544,7 @@ class __ModalSettingsTileState extends State<_ModalSettingsTile>
         ? widget.subtitle ??
             (!widget.obfuscateSubtitle
                 ? widget.valueToTitle(value)
-                : value.length > 0
+                : value.isNotEmpty
                     ? widget.valueToTitle('●' * value.length)
                     : "Not Set")
         : null;
@@ -1587,7 +1599,7 @@ class _SettingsModal extends StatefulWidget {
   final String cancelCaption;
   final String okCaption;
 
-  _SettingsModal({
+  const _SettingsModal({
     required this.title,
     required this.buildChild,
     required this.initialValue,
@@ -1707,7 +1719,8 @@ class RadioPickerSettingsTile extends StatelessWidget {
   final String? enabledIfKey;
   final bool visibleByDefault;
 
-  RadioPickerSettingsTile({
+  const RadioPickerSettingsTile({
+    super.key,
     required this.settingKey,
     required this.title,
     required this.values,
@@ -1734,8 +1747,8 @@ class RadioPickerSettingsTile extends StatelessWidget {
       enabledIfKey: enabledIfKey,
       visibleByDefault: visibleByDefault,
       buildChild: (String? value, void Function(String?) onChanged) {
-        // TODO: Scroll to the selected value.
-        return Container(
+        // TO DO: Scroll to the selected value.
+        return SizedBox(
           width: double.maxFinite,
           child: ListView.builder(
             shrinkWrap: true,
@@ -1824,7 +1837,8 @@ class TextFieldModalSettingsTile extends StatelessWidget {
   final bool visibleByDefault;
   final bool obscureText;
 
-  TextFieldModalSettingsTile({
+  const TextFieldModalSettingsTile({
+    super.key,
     required this.settingKey,
     required this.title,
     this.defaultValue,
@@ -1854,14 +1868,14 @@ class TextFieldModalSettingsTile extends StatelessWidget {
       enabledIfKey: enabledIfKey,
       visibleByDefault: visibleByDefault,
       buildChild: (String? value, void Function(String?) onChanged) {
-        TextEditingController _controller = TextEditingController();
-        _controller.text = value ?? '';
-        _controller.addListener(() {
-          onChanged(_controller.text);
+        TextEditingController controller = TextEditingController();
+        controller.text = value ?? '';
+        controller.addListener(() {
+          onChanged(controller.text);
         });
         return TextFormField(
           autofocus: true,
-          controller: _controller,
+          controller: controller,
           keyboardType: keyboardType,
           obscureText: obscureText,
         );
@@ -1872,12 +1886,13 @@ class TextFieldModalSettingsTile extends StatelessWidget {
   }
 }
 
-class _ColorWidget {
+mixin _ColorWidget {
   String _valueToTitle(String? value) {
     String color = "00000000";
     if (value != null) {
       try {
         color = value.split('0x')[1].split(')')[0];
+        // ignore: empty_catches
       } catch (e) {}
     }
     return "0x$color";
@@ -1888,6 +1903,7 @@ class _ColorWidget {
     if (value != null) {
       try {
         color = Color(int.parse(value.split('0x')[1].split(')')[0], radix: 16));
+        // ignore: empty_catches
       } catch (e) {}
     }
     return color;
@@ -2042,6 +2058,7 @@ class SimpleColorPickerSettingsTile extends StatelessWidget with _ColorWidget {
   final String? confirmModalConfirmCaption;
 
   SimpleColorPickerSettingsTile({
+    super.key,
     required this.settingKey,
     required this.title,
     this.defaultValue,
@@ -2166,6 +2183,7 @@ class MaterialColorPickerSettingsTile extends StatelessWidget
   final String? confirmModalConfirmCaption;
 
   MaterialColorPickerSettingsTile({
+    super.key,
     required this.settingKey,
     required this.title,
     this.defaultValue,
@@ -2256,7 +2274,8 @@ class SettingsContainer extends StatelessWidget {
   final String? visibleIfKey;
   final bool visibleByDefault;
 
-  SettingsContainer({
+  const SettingsContainer({
+    super.key,
     this.child,
     this.children = const <Widget>[],
     this.visibleIfKey,
@@ -2294,7 +2313,7 @@ class _SettingsCheckbox extends StatelessWidget {
   final ValueChanged<bool?> onChanged;
   final bool enabled;
 
-  _SettingsCheckbox({
+  const _SettingsCheckbox({
     required this.value,
     required this.onChanged,
     required this.enabled,
@@ -2314,7 +2333,7 @@ class _SettingsSwitch extends StatelessWidget {
   final ValueChanged<bool> onChanged;
   final bool enabled;
 
-  _SettingsSwitch({
+  const _SettingsSwitch({
     required this.value,
     required this.onChanged,
     required this.enabled,
@@ -2335,7 +2354,7 @@ class _SettingsRadio extends StatelessWidget {
   final ValueChanged<String?> onChanged;
   final bool enabled;
 
-  _SettingsRadio({
+  const _SettingsRadio({
     required this.groupValue,
     required this.value,
     required this.onChanged,
@@ -2362,7 +2381,7 @@ class _SettingsSlider extends StatelessWidget {
   final Widget? trailing;
   final bool enabled;
 
-  _SettingsSlider({
+  const _SettingsSlider({
     required this.value,
     required this.min,
     required this.max,
@@ -2400,7 +2419,7 @@ class _ConfirmableScreen extends StatefulWidget {
   final String? confirmModalCancelCaption;
   final String? confirmModalConfirmCaption;
 
-  _ConfirmableScreen({
+  const _ConfirmableScreen({
     required this.child,
     this.confirmText,
     this.confirmModalTitle,
@@ -2440,7 +2459,7 @@ class __ConfirmableScreenState extends State<_ConfirmableScreen>
   }
 }
 
-class _Confirmable {
+mixin _Confirmable {
   confirm({
     required BuildContext context,
     oldValue,
@@ -2522,6 +2541,7 @@ class _Confirmable {
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
+                      // ignore: void_checks
                       return onCancel?.call();
                     },
                   ),
@@ -2531,6 +2551,7 @@ class _Confirmable {
                     child: Text(confirmModalConfirmCaption ?? "Ok"),
                     onPressed: () {
                       Navigator.of(context).pop();
+                      // ignore: void_checks
                       return onConfirm?.call();
                     },
                   ),
@@ -2544,7 +2565,7 @@ class _Confirmable {
 typedef ChildBuilder = Widget Function(
     BuildContext context, bool visibleByDefault);
 
-class _Enableable {
+mixin _Enableable {
   Widget wrapEnableable({
     required BuildContext context,
     required String? enabledIfKey,

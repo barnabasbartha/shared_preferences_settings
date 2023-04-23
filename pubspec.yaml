@@ -8,19 +8,21 @@ homepage: https://github.com/BarthaBRW/shared_preferences_settings
 version: 2.1.0
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=3.0.0-387.0.dev <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  shared_preferences: ^2.0.7
-  rxdart: ^0.27.2
-  flutter_colorpicker: ^0.6.0
+  shared_preferences: ^2.1.0
+  rxdart: ^0.27.7
+  flutter_colorpicker: ^1.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_lints: ^2.0.0    
 
 flutter:
   uses-material-design: true
